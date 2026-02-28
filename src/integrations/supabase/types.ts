@@ -14,7 +14,165 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      module_slots: {
+        Row: {
+          day_of_week: number
+          end_time: string
+          id: string
+          module_id: string
+          section: string
+          start_time: string
+          venue: string
+        }
+        Insert: {
+          day_of_week: number
+          end_time: string
+          id?: string
+          module_id: string
+          section?: string
+          start_time: string
+          venue?: string
+        }
+        Update: {
+          day_of_week?: number
+          end_time?: string
+          id?: string
+          module_id?: string
+          section?: string
+          start_time?: string
+          venue?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "module_slots_module_id_fkey"
+            columns: ["module_id"]
+            isOneToOne: false
+            referencedRelation: "modules"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      modules: {
+        Row: {
+          code: string
+          created_at: string
+          credit_units: number
+          description: string
+          id: string
+          name: string
+          prerequisites: string[]
+          school: string
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          credit_units?: number
+          description?: string
+          id?: string
+          name: string
+          prerequisites?: string[]
+          school?: string
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          credit_units?: number
+          description?: string
+          id?: string
+          name?: string
+          prerequisites?: string[]
+          school?: string
+        }
+        Relationships: []
+      }
+      reviews: {
+        Row: {
+          comment: string
+          created_at: string
+          id: string
+          module_id: string
+          rating: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          comment?: string
+          created_at?: string
+          id?: string
+          module_id: string
+          rating: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          comment?: string
+          created_at?: string
+          id?: string
+          module_id?: string
+          rating?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reviews_module_id_fkey"
+            columns: ["module_id"]
+            isOneToOne: false
+            referencedRelation: "modules"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      timetable_entries: {
+        Row: {
+          created_at: string
+          id: string
+          module_slot_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          module_slot_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          module_slot_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "timetable_entries_module_slot_id_fkey"
+            columns: ["module_slot_id"]
+            isOneToOne: false
+            referencedRelation: "module_slots"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_progress: {
+        Row: {
+          completed_at: string
+          id: string
+          module_code: string
+          user_id: string
+        }
+        Insert: {
+          completed_at?: string
+          id?: string
+          module_code: string
+          user_id: string
+        }
+        Update: {
+          completed_at?: string
+          id?: string
+          module_code?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
