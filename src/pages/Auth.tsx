@@ -63,7 +63,7 @@ export default function Auth() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                minLength={6}
+                minLength={isLogin ? undefined : 6}
               />
             </div>
             <Button type="submit" className="w-full" disabled={submitting}>
@@ -81,7 +81,7 @@ export default function Auth() {
             </button>
           </div>
           <div className="mt-3 rounded-md bg-muted p-3 text-center text-xs text-muted-foreground">
-            Test account: <span className="font-mono">test@test.com</span> / <span className="font-mono">test</span>
+            Test account: <span className="font-mono">test@test.com</span> / <span className="font-mono">test123</span>
           </div>
         </CardContent>
       </Card>
