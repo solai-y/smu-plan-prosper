@@ -6,22 +6,20 @@ Deno.serve(async () => {
     Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
   );
 
-  // Try to create test account
+  // List users to find existing test account
+  const { data: users } = await supabase.auth.admin.listUsers();
+  const testUser = users?.users?.find((u: any) => u.email === "test@test.com");
+  
+  if (testUser) {
+    // Delete and recreate with new password
+    await supabase.auth.admin.deleteUser(testUser.id);
+  }
+
   const { data, error } = await supabase.auth.admin.createUser({
     email: "test@test.com",
     password: "test123",
     email_confirm: true,
   });
-
-  if (error && error.message.includes("already been registered")) {
-    // Update password instead
-    const { data: users } = await supabase.auth.admin.listUsers();
-    const testUser = users?.users?.find((u) => u.email === "test@test.com");
-    if (testUser) {
-      await supabase.auth.admin.updateUser(testUser.id, { password: "test123" });
-      return new Response(JSON.stringify({ message: "Password updated" }));
-    }
-  }
 
   return new Response(JSON.stringify({ data, error }));
 });
