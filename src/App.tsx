@@ -5,10 +5,9 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "@/hooks/useAuth";
 import AppLayout from "@/components/AppLayout";
-import Index from "./pages/Index";
+import GraduationRequirements from "./pages/GraduationRequirements";
 import ModuleDetail from "./pages/ModuleDetail";
 import Timetable from "./pages/Timetable";
-import ProgressPage from "./pages/Progress";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 
@@ -30,10 +29,9 @@ const App = () => (
         <AuthProvider>
           <Routes>
             <Route path="/auth" element={<Auth />} />
-            <Route path="/" element={<ProtectedRoute><Index /></ProtectedRoute>} />
+            <Route path="/" element={<ProtectedRoute><GraduationRequirements /></ProtectedRoute>} />
             <Route path="/module/:code" element={<ProtectedRoute><ModuleDetail /></ProtectedRoute>} />
             <Route path="/timetable" element={<ProtectedRoute><Timetable /></ProtectedRoute>} />
-            <Route path="/progress" element={<ProtectedRoute><ProgressPage /></ProtectedRoute>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AuthProvider>
