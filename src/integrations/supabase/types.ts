@@ -55,30 +55,36 @@ export type Database = {
       modules: {
         Row: {
           code: string
+          corequisites: string[]
           created_at: string
           credit_units: number
           description: string
           id: string
+          module_group: string
           name: string
           prerequisites: string[]
           school: string
         }
         Insert: {
           code: string
+          corequisites?: string[]
           created_at?: string
           credit_units?: number
           description?: string
           id?: string
+          module_group?: string
           name: string
           prerequisites?: string[]
           school?: string
         }
         Update: {
           code?: string
+          corequisites?: string[]
           created_at?: string
           credit_units?: number
           description?: string
           id?: string
+          module_group?: string
           name?: string
           prerequisites?: string[]
           school?: string
