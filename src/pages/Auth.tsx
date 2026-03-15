@@ -9,12 +9,11 @@ import { GraduationCap } from "lucide-react";
 import { toast } from "sonner";
 
 export default function Auth() {
-  const { user, loading } = useAuth();
+  const { user, loading, signIn, signUp } = useAuth();
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
-  const { signIn, signUp } = useAuth();
 
   if (loading) return null;
   if (user) return <Navigate to="/" replace />;
@@ -45,26 +44,11 @@ export default function Auth() {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="you@smu.edu.sg"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
+              <Input id="email" type="email" placeholder="you@smu.edu.sg" value={email} onChange={(e) => setEmail(e.target.value)} required />
             </div>
             <div className="space-y-2">
               <Label htmlFor="password">Password</Label>
-              <Input
-                id="password"
-                type="password"
-                placeholder="••••••••"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                minLength={isLogin ? undefined : 6}
-              />
+              <Input id="password" type="password" placeholder="••••••••" value={password} onChange={(e) => setPassword(e.target.value)} required minLength={isLogin ? undefined : 6} />
             </div>
             <Button type="submit" className="w-full" disabled={submitting}>
               {submitting ? "Please wait..." : isLogin ? "Sign In" : "Create Account"}
@@ -72,16 +56,9 @@ export default function Auth() {
           </form>
           <div className="mt-4 text-center text-sm text-muted-foreground">
             {isLogin ? "Don't have an account?" : "Already have an account?"}{" "}
-            <button
-              type="button"
-              onClick={() => setIsLogin(!isLogin)}
-              className="font-medium text-primary underline-offset-4 hover:underline"
-            >
+            <button type="button" onClick={() => setIsLogin(!isLogin)} className="font-medium text-primary underline-offset-4 hover:underline">
               {isLogin ? "Sign Up" : "Sign In"}
             </button>
-          </div>
-          <div className="mt-3 rounded-md bg-muted p-3 text-center text-xs text-muted-foreground">
-            Test account: <span className="font-mono">test@test.com</span> / <span className="font-mono">test123</span>
           </div>
         </CardContent>
       </Card>

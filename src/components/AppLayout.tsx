@@ -2,17 +2,16 @@ import { ReactNode } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
-import { GraduationCap, BookOpen, Calendar, CheckCircle, LogOut } from "lucide-react";
+import { GraduationCap, Calendar, CheckCircle, LogOut } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navItems = [
-  { to: "/", label: "Modules", icon: BookOpen },
-  { to: "/timetable", label: "Timetable", icon: Calendar },
-  { to: "/progress", label: "Progress", icon: CheckCircle },
+  { to: "/", label: "Graduation Requirements", icon: CheckCircle },
+  { to: "/timetable", label: "Calendar", icon: Calendar },
 ];
 
 export default function AppLayout({ children }: { children: ReactNode }) {
-  const { signOut, user } = useAuth();
+  const { signOut } = useAuth();
   const location = useLocation();
 
   return (
