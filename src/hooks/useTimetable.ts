@@ -40,6 +40,32 @@ export function useAddTimetableEntry() {
 
   return useMutation({
     mutationFn: async (moduleSlotId: string) => {
+      // Get the new slot's day and time
+      const { data: newSlot, error: slotErr } = await supabase
+        .from("module_slots")
+        .select("day_of_week, start_time")
+        .eq("id", moduleSlotId)
+        .single();
+      if (slotErr || !newSlot) throw new Error("Could not find slot details");
+
+      // Check if user already has an entry at the same day + time
+      const { data: existing, error: existErr } = await supabase
+        .from("timetable_entries")
+        .select("id, module_slots!inner(day_of_week, start_time, modules(code, name))")
+        .eq("user_id", user!.id);
+      if (existErr) throw existErr;
+
+      const conflict = existing?.find((e: any) => {
+        const s = e.module_slots;
+        return s && s.day_of_week === newSlot.day_of_week && s.start_time === newSlot.start_time;
+      });
+
+      if (conflict) {
+        const mod = (conflict as any).module_slots?.modules;
+        const label = mod ? `${mod.code} — ${mod.name}` : "another module";
+        throw new Error(`This time slot is already taken by ${label}.`);
+      }
+
       const { error } = await supabase
         .from("timetable_entries")
         .insert({ user_id: user!.id, module_slot_id: moduleSlotId });
